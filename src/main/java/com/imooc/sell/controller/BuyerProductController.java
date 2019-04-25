@@ -4,6 +4,7 @@ import com.imooc.sell.dataobject.ProductCategory;
 import com.imooc.sell.dataobject.ProductInfo;
 import com.imooc.sell.service.CategoryService;
 import com.imooc.sell.service.ProductService;
+import com.imooc.sell.util.ResultVoUtil;
 import com.imooc.sell.vo.ProductInfoVo;
 import com.imooc.sell.vo.ProductVo;
 import com.imooc.sell.vo.ResultVo;
@@ -38,15 +39,14 @@ public class BuyerProductController {
         List<ProductInfo> productInfoList = productService.findUpAll();
 
         //查询类目（一次性查询）
-
         //传统方法
-        List<Integer> categoryTypeList = new ArrayList<>();
-        for (ProductInfo productInfo : productInfoList){
-            categoryTypeList.add(productInfo.getCategoryType());
-        }
+//        List<Integer> categoryTypeList = new ArrayList<>();
+//        for (ProductInfo productInfo : productInfoList){
+//            categoryTypeList.add(productInfo.getCategoryType());
+//        }
         //精简方法
-//        List<Integer> categoryTypeList = productInfoList.stream().map(e->e.getCategoryType()).collect(Collectors.toList());
-//        List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(categoryTypeList);
+        List<Integer> categoryTypeList = productInfoList.stream().map(e->e.getCategoryType()).collect(Collectors.toList());
+        List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(categoryTypeList);
 
         //数据拼装
         List<ProductVo> productVoList = new ArrayList<>();
@@ -66,16 +66,13 @@ public class BuyerProductController {
 //                    productInfoVo.setProductIcon(productInfo.getProductIcon());
                     BeanUtils.copyProperties(productInfo, productInfoVo);
                     productInfoVoList.add(productInfoVo);
+                    System.out.println("this"+productInfoVoList.toString());
                 }
             }
             productVo.setProductInfoVoList(productInfoVoList);
+            productVoList.add(productVo);
         }
-        ResultVo resultVo = new ResultVo();
 
-        resultVo.setCode(0);
-        resultVo.setMsg("go");
-        resultVo.setData(productVoList);
-
-        return resultVo;
+        return ResultVoUtil.success(productVoList);
     }
 }
