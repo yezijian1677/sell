@@ -1,10 +1,13 @@
 package com.imooc.sell.service.impl;
 
+import com.imooc.sell.dataobject.ProductInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
@@ -29,5 +32,17 @@ public class ProductServiceImplTest {
 
     @Test
     public void save() {
+
+        ProductInfo productInfo = new ProductInfo();
+        productInfo.setProductId("123");
+        productInfo.setProductName("pidan");
+        productInfo.setProductPrice(new BigDecimal("12"));
+        productInfo.setProductStatus(0);
+        productInfo.setProductStock(100);
+        productInfo.setProductDescription("很好");
+        productInfo.setProductIcon("gogo");
+        productInfo.setCategoryType(1);
+
+        productService.save(productInfo);
     }
 }
