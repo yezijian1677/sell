@@ -18,6 +18,8 @@ public class OrderDetail {
     /** 商品名称 */
     private String productName;
 
+    private String productId;
+
     /**
      * 单价
      */
