@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
 
-@Service
+
 public interface OrderService {
     /** 创建订单*/
     OrderDTO create(OrderDTO orderDTO);
