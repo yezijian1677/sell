@@ -21,7 +21,7 @@ public interface ProductService {
     ProductInfo save(ProductInfo productInfo);
 
     //加库存
-    void increaseStick(List<Cart> cartList);
+    void increaseStock(List<Cart> cartList);
 
     //减库存
     void decreaseStock(List<Cart> cartList);
