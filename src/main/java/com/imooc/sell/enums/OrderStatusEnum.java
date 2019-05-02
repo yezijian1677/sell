@@ -1,6 +1,8 @@
 package com.imooc.sell.enums;
 
-public enum OrderStatusEnum {
+import com.imooc.sell.util.EnumUtil;
+
+public enum OrderStatusEnum implements CodeEnum {
     NEW(0, "新订单"),
     FINISHED(1, "完结"),
     CANCLE(2, "已取消"),

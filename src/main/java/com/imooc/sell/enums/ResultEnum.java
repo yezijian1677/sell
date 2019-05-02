@@ -1,6 +1,7 @@
 package com.imooc.sell.enums;
 
 public enum ResultEnum {
+    SUCCESS(0, "成功"),
 
     PRODUCT_NOT_EXIST(10, "商品不存在"),
     PRODUCT_STOCK_ERROR(11, "商品库存不正确"),
