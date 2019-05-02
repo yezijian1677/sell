@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import java.util.Map;
 
 @RestController
@@ -32,6 +33,7 @@ public class SellerOrderController {
         return new ModelAndView("order/list", map);
     }
 
+    @GetMapping("/cancel")
     public ModelAndView cancel(@RequestParam("orderId") String orderId,
                                Map<String, Object> map ) {
         try {
@@ -49,5 +51,45 @@ public class SellerOrderController {
         map.put("url", "/sell/seller/order/list");
         return new ModelAndView("common/success");
 
+    }
+
+    @GetMapping("/detail")
+    public ModelAndView detail(@RequestParam("orderId") String orderId,
+                               Map<String, Object> map ){
+
+        OrderDTO orderDTO = new OrderDTO()
+;        try {
+            orderDTO = orderService.findOne(orderId);
+        } catch (SellException e) {
+
+            log.error("[卖家查询订单详情] 发生异常");
+            map.put("msg", e.getMessage());
+            map.put("url", "/sell/seller/order/list");
+
+            return new ModelAndView("common/error", map);
+        }
+
+        map.put("orderDTO", orderDTO);
+        return new ModelAndView("order/detail", map);
+    }
+
+    @GetMapping("/finish")
+    public ModelAndView finished(@RequestParam("orderId") String orderId,
+                               Map<String, Object> map ){
+        OrderDTO orderDTO = new OrderDTO();
+        try {
+            orderDTO = orderService.findOne(orderId);
+        } catch (SellException e) {
+
+            log.error("[卖家完结订单] 发生异常");
+            map.put("msg", e.getMessage());
+            map.put("url", "/sell/seller/order/list");
+
+            return new ModelAndView("common/error", map);
+        }
+
+        map.put("msg", ResultEnum.SUCCESS.getMessage());
+        map.put("url", "/sell/seller/order/list");
+        return new ModelAndView("common/success");
     }
 }
