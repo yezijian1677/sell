@@ -1,19 +1,23 @@
 package com.imooc.sell.controller;
 
 
+import com.imooc.sell.dataobject.ProductCategory;
 import com.imooc.sell.dataobject.ProductInfo;
-import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.exception.SellException;
+import com.imooc.sell.service.CategoryService;
 import com.imooc.sell.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -22,6 +26,9 @@ public class SellerProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/list")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -67,5 +74,21 @@ public class SellerProductController {
         return new ModelAndView("common/success", map);
 
     }
+
+    @GetMapping("index")
+    public void index(@RequestParam(value = "productId", required = false) String productId,
+                      Map<String, Object> map ) {
+        if (!StringUtils.isEmpty(productId)) {
+            ProductInfo productInfo = productService.findOne(productId);
+            map.put("productInfo", productInfo);
+        }
+        //查询所有类目
+        List<ProductCategory> categoryList = categoryService.findAll();
+        map.put("categoryList", categoryList);
+
+        return;
+        new ModelAndView("product/index", map);
+    }
+
 
 }
