@@ -12,7 +12,8 @@ public interface ProductService {
 
     /**
      * 所有在售商品
-      * @return
+     *
+     * @return
      */
     List<ProductInfo> findUpAll();
 
@@ -25,4 +26,10 @@ public interface ProductService {
 
     //减库存
     void decreaseStock(List<Cart> cartList);
+
+    //上架
+    ProductInfo onSale(String productId);
+
+    //下架
+    ProductInfo offSale(String productId);
 }
